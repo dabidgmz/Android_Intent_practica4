@@ -16,87 +16,106 @@ public class MainActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         // Botones para intents implícitos
-        Button btnImplicit1 = findViewById(R.id.btnImplicit1);
-        btnImplicit1.setOnClickListener(new View.OnClickListener() {
+        Button btnAbrirWeb = findViewById(R.id.btnImplicit1);
+        btnAbrirWeb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Abrir una página web
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com"));
-                startActivity(intent);
+
+                Uri webpage = Uri.parse("https://www.google.com");
+                Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                } else {
+                    mostrarMensaje("No se puede abrir la web. ¡Instala un navegador!");
+                }
             }
         });
 
-        Button btnImplicit2 = findViewById(R.id.btnImplicit2);
-        btnImplicit2.setOnClickListener(new View.OnClickListener() {
+        Button btnCompartirTexto = findViewById(R.id.btnImplicit2);
+        btnCompartirTexto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, "¡Hola desde mi app!");
-                startActivity(intent);
+                intent.putExtra(Intent.EXTRA_TEXT, "¡Hola desde mi app! #AndroidMagic");
+
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                } else {
+                    mostrarMensaje("No se puede compartir el texto. ¿Tienes aplicaciones de redes sociales instaladas?");
+                }
             }
         });
 
-        Button btnImplicit3 = findViewById(R.id.btnImplicit3);
-        btnImplicit3.setOnClickListener(new View.OnClickListener() {
+        Button btnTomarFoto = findViewById(R.id.btnImplicit3);
+        btnTomarFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivity(intent);
+
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                } else {
+                    mostrarMensaje("No se puede abrir la cámara. ¿Tienes una cámara instalada?");
+                }
             }
         });
 
-        Button btnImplicit4 = findViewById(R.id.btnImplicit4);
-        btnImplicit4.setOnClickListener(new View.OnClickListener() {
+        Button btnMapa = findViewById(R.id.btnImplicit4);
+        btnMapa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Abrir una ubicación en el mapa
                 Uri gmmIntentUri = Uri.parse("geo:0,0?q=1600 Amphitheatre Parkway, Mountain View, California");
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                 mapIntent.setPackage("com.google.android.apps.maps");
-                startActivity(mapIntent);
+
+                if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(mapIntent);
+                } else {
+                    mostrarMensaje("No se puede abrir el mapa. Asegúrate de tener Google Maps instalado.");
+                }
             }
         });
 
-        // Botones para intents explícitos
-        Button btnExplicit1 = findViewById(R.id.btnExplicit1);
-        btnExplicit1.setOnClickListener(new View.OnClickListener() {
+
+        Button btnExpl1 = findViewById(R.id.btnExplicit1);
+        btnExpl1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Actualiza el TextView con un mensaje
-                TextView txtResultado = findViewById(R.id.txtResultado);
-                txtResultado.setText("Has pulsado el botón Explícito 1");
+                mostrarMensaje("¡Has desbloqueado el logro Explícito 1! 🏆");
             }
         });
 
-        Button btnExplicit2 = findViewById(R.id.btnExplicit2);
-        btnExplicit2.setOnClickListener(new View.OnClickListener() {
+        Button btnExpl2 = findViewById(R.id.btnExplicit2);
+        btnExpl2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Actualiza el TextView con un mensaje
-                TextView txtResultado = findViewById(R.id.txtResultado);
-                txtResultado.setText("Has pulsado el botón Explícito 2");
+                mostrarMensaje("¡Has desbloqueado el logro Explícito 2! 🏅");
             }
         });
 
-        Button btnExplicit3 = findViewById(R.id.btnExplicit3);
-        btnExplicit3.setOnClickListener(new View.OnClickListener() {
+        Button btnExpl3 = findViewById(R.id.btnExplicit3);
+        btnExpl3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Actualiza el TextView con un mensaje
-                TextView txtResultado = findViewById(R.id.txtResultado);
-                txtResultado.setText("Has pulsado el botón Explícito 3");
+                mostrarMensaje("¡Has desbloqueado el logro Explícito 3! 🎉");
             }
         });
 
-        Button btnExplicit4 = findViewById(R.id.btnExplicit4);
-        btnExplicit4.setOnClickListener(new View.OnClickListener() {
+        Button btnExpl4 = findViewById(R.id.btnExplicit4);
+        btnExpl4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Actualiza el TextView con un mensaje
-                TextView txtResultado = findViewById(R.id.txtResultado);
-                txtResultado.setText("Has pulsado el botón Explícito 4");
+                mostrarMensaje("¡Has desbloqueado el logro Explícito 4! 🌟");
             }
         });
+    }
+
+
+    private void mostrarMensaje(String mensaje) {
+        TextView txtResultado = findViewById(R.id.txtResultado);
+        txtResultado.setText(mensaje);
     }
 }
