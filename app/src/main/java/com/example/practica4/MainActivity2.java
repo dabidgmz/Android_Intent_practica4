@@ -15,71 +15,43 @@ public class MainActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        // Botones para intents implícitos
+        // Botón para abrir un sitio web
         Button btnAbrirWeb = findViewById(R.id.btnImplicit1);
         btnAbrirWeb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Uri webpage = Uri.parse("https://www.google.com");
-                Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
-
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
-                } else {
-                    mostrarMensaje("No se puede abrir la web. ¡Instala un navegador!");
-                }
+                abrirSitioWeb();
             }
         });
 
+        // Botón para compartir texto
         Button btnCompartirTexto = findViewById(R.id.btnImplicit2);
         btnCompartirTexto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, "¡Hola desde mi app! #AndroidMagic");
-
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
-                } else {
-                    mostrarMensaje("No se puede compartir el texto. ¿Tienes aplicaciones de redes sociales instaladas?");
-                }
+                compartirTexto();
             }
         });
 
+        // Botón para abrir la cámara
         Button btnTomarFoto = findViewById(R.id.btnImplicit3);
         btnTomarFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
-                } else {
-                    mostrarMensaje("No se puede abrir la cámara. ¿Tienes una cámara instalada?");
-                }
+                abrirCamara();
             }
         });
 
+        // Botón para abrir Google Maps
         Button btnMapa = findViewById(R.id.btnImplicit4);
         btnMapa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri gmmIntentUri = Uri.parse("geo:0,0?q=1600 Amphitheatre Parkway, Mountain View, California");
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                mapIntent.setPackage("com.google.android.apps.maps");
-
-                if (mapIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(mapIntent);
-                } else {
-                    mostrarMensaje("No se puede abrir el mapa. Asegúrate de tener Google Maps instalado.");
-                }
+                abrirMapa();
             }
         });
 
-
+        // Botones para logros explícitos
         Button btnExpl1 = findViewById(R.id.btnExplicit1);
         btnExpl1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +85,50 @@ public class MainActivity2 extends AppCompatActivity {
         });
     }
 
+    private void abrirSitioWeb() {
+        Uri webpage = Uri.parse("https://www.google.com");
+        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            mostrarMensaje("No se puede abrir la web. ¡Instala un navegador!");
+        }
+    }
+
+    private void compartirTexto() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, "¡Hola desde mi app! #AndroidMagic");
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            mostrarMensaje("No se puede compartir el texto. ¿Tienes aplicaciones de redes sociales instaladas?");
+        }
+    }
+
+    private void abrirCamara() {
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            mostrarMensaje("No se puede abrir la cámara. ¿Tienes una cámara instalada?");
+        }
+    }
+
+    private void abrirMapa() {
+        Uri gmmIntentUri = Uri.parse("geo:0,0?q=1600 Amphitheatre Parkway, Mountain View, California");
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
+        } else {
+            mostrarMensaje("No se puede abrir el mapa. Asegúrate de tener Google Maps instalado.");
+        }
+    }
 
     private void mostrarMensaje(String mensaje) {
         TextView txtResultado = findViewById(R.id.txtResultado);
